@@ -11,7 +11,7 @@ public class MemberApp {
     public static void main(String[] args) {
 //        AppConfig appConfig = new AppConfig();
 //        MemberService memberService = appConfig.memberService();
-        
+         
         // @Bean으로 들어간 것들을
         // 스프링 컨테이너에 관리해준다.
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
