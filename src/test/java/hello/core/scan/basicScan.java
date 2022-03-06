@@ -1,9 +1,6 @@
-package scan;
+package hello.core.scan;
 
 import hello.core.AutoAppConfig;
-import hello.core.member.MemberService;
-import hello.core.member.MemberServiceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,9 +9,18 @@ public class basicScan {
     @Test
     void basicScan(){
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class);
-        MemberService memberService = ac.getBean(MemberService.class);
-        Assertions.assertThat(memberService).isInstanceOf(MemberService.class);
 
+        String[] beanDefinitionNames = ac.getBeanDefinitionNames();
+        // iter
+        System.out.println("-----------------");
+        for (String beanDefinitionName : beanDefinitionNames) {
+            Object bean = ac.getBean(beanDefinitionName);
+            System.out.println("beanDefinitionName = " + beanDefinitionName + " object => " + bean);
+        }
+
+
+        //        MemberService memberService = ac.getBean(MemberService.class);
+        //        Assertions.assertThat(memberService).isInstanceOf(MemberService.class);
 
         /**
          * 1) AutoAppConfig.java
