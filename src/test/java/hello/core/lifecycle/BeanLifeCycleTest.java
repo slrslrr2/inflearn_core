@@ -16,6 +16,7 @@ public class BeanLifeCycleTest {
          */
         ConfigurableApplicationContext ac = new AnnotationConfigApplicationContext(LifeCycleConfig.class);
         ac.getBean(NetworkClient.class);
+        ac.close();
         /**
          * 1. 생성자 호출 url null
          * 2. connect :null
@@ -43,7 +44,8 @@ public class BeanLifeCycleTest {
          */
 
         /*
-        1. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기 - 1. 인터페이스(InitializingBean, DisposableBean)
+        1. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기
+         - 인터페이스(InitializingBean, DisposableBean)
         ㄴ 예전에 나왔고 잘 사용하지는 않음.
 
             @Autowired의존관계 주입 후 실행 함수 : InitializingBean - afterPropertiesSet함수를 상속받아 사용한다.
@@ -53,7 +55,8 @@ public class BeanLifeCycleTest {
          */
 
         /*
-        2. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기 - @Bean(initMethod = "init", destroyMethod = "close")
+        2. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기
+         - @Bean(initMethod = "init", destroyMethod = "close")
             @Autowired의존관계 주입 후 실행 함수 : initMethod = "init"
             ac.close() 직전 실행 함수 : destroyMethod = "close"
 
@@ -62,14 +65,25 @@ public class BeanLifeCycleTest {
                   - destroyMethod명이 정해져 있어서 해당메소드 사용하고싶지 않으면
                     destroyMethod = "" 라고 정의해줘야함
          */
-        ac.close();
+
+        /*
+
+        3. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기
+         - @PostConstruct, @PreDestroy
+
+            @Autowired의존관계 주입 후 실행 함수 : @PostConstruct붙이기
+            ac.close() 직전 실행 함수 : @PreDestroy
+
+            장점 : 패키지를 보면 javax.~ 으로 시작 -> 자바 표준에서 지원, 스프링종속X
+            단점 : 외부라이브러리에 적용하려면 소스코드 수정해야하기에
+                  이땐, @Bean(initMethod = "init", destroyMethod = "close")이걸 사용해라
+         */
 
     }
 
     @Configuration
     static class LifeCycleConfig{
-
-        @Bean(initMethod = "init", destroyMethod = "close")
+        @Bean
         public NetworkClient networkClient(){
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://hello-spring.dev");
