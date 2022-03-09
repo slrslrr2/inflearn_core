@@ -46,8 +46,21 @@ public class BeanLifeCycleTest {
         1. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기 - 1. 인터페이스(InitializingBean, DisposableBean)
         ㄴ 예전에 나왔고 잘 사용하지는 않음.
 
-        @Autowired의존관계 주입 후 실행 함수 : InitializingBean - afterPropertiesSet함수를 상속받아 사용한다.
-        ac.close() 직전 실행 함수 : DisposableBean - destroy 함수를
+            @Autowired의존관계 주입 후 실행 함수 : InitializingBean - afterPropertiesSet함수를 상속받아 사용한다.
+            ac.close() 직전 실행 함수 : DisposableBean - destroy 함수
+
+            단점은 interface를 무조건 상속받아야해서 이름 지정이 어렵다.
+         */
+
+        /*
+        2. 스프링 빈의 초기화 시점, 소멸 직전 시점 알려주기 - @Bean(initMethod = "init", destroyMethod = "close")
+            @Autowired의존관계 주입 후 실행 함수 : initMethod = "init"
+            ac.close() 직전 실행 함수 : destroyMethod = "close"
+
+            장점 : 이름 정의 가능, 외부라이브러리에 사용가능
+            단점 : - @Bean에 의존적
+                  - destroyMethod명이 정해져 있어서 해당메소드 사용하고싶지 않으면
+                    destroyMethod = "" 라고 정의해줘야함
          */
         ac.close();
 
@@ -56,7 +69,7 @@ public class BeanLifeCycleTest {
     @Configuration
     static class LifeCycleConfig{
 
-        @Bean
+        @Bean(initMethod = "init", destroyMethod = "close")
         public NetworkClient networkClient(){
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://hello-spring.dev");
