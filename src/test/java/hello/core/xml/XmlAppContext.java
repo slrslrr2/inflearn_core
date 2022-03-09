@@ -1,8 +1,5 @@
 package hello.core.xml;
 
-import hello.core.member.MemberService;
-import hello.core.member.MemberServiceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +11,12 @@ public class XmlAppContext {
     @DisplayName("Xml App Test")
     void getXmlAppContext(){
         ApplicationContext ac = new GenericXmlApplicationContext("appConfig.xml");
-        MemberService memberService = ac.getBean("memberSerivce", MemberService.class);
-        Assertions.assertThat(memberService).isInstanceOf(MemberService.class);
+        String[] beanDefinitionNames = ac.getBeanDefinitionNames();
+
+        for (String beanDefinitionName : beanDefinitionNames) {
+            System.out.println("beanDefinitionName = " + beanDefinitionName);
+        }
+//                MemberService memberService = ac.getBean("memberSerivce", MemberService.class);
+//        Assertions.assertThat(memberService).isInstanceOf(MemberService.class);
     }
 }
