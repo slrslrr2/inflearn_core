@@ -24,19 +24,19 @@ public class SingletonBeanFind {
         ac.close();
 
         /**
-         * SingletonBean.init
-         * singletonBean = hello.core.scope.SingletonBeanFind$SingletonBean@78aea4b9
-         * singletonBean2 = hello.core.scope.SingletonBeanFind$SingletonBean@78aea4b9
-         * 23:57:23.164 [Test worker] DEBUG org.springframework.context.annotation.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@7e3181aa, started on Wed Mar 09 23:57:22 KST 2022
-         * SingletonBean.destroy
+         SingletonBean.init
+         singletonBean = hello.core.scope.SingletonBeanFind$SingletonBean@78aea4b9
+         singletonBean2 = hello.core.scope.SingletonBeanFind$SingletonBean@78aea4b9
+             23:57:23.164 [Test worker] DEBUG org.springframework.context.annotation.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@7e3181aa, started on Wed Mar 09 23:57:22 KST 2022
+             SingletonBean.destroy
          */
 
         /**
-         * @Scope("singleton")
-         * 같은 인스턴스를 조회한다.
-         * SingletonBean는 init하고 destory한다.
-         * 초기화 메서드 실행시점 : 스프링 컨테이너 생성 시점
-         * 스프링컨테이너가 관리하기에 종료 빈 메서드 실행함(destroy)
+         @Scope("singleton")
+             같은 인스턴스를 조회한다.
+             SingletonBean는 init하고 destory한다.
+             초기화 메서드 실행시점 : 스프링 컨테이너 생성 시점
+             스프링컨테이너가 관리하기에 종료 빈 메서드 실행함(destroy)
          */
     }
 
