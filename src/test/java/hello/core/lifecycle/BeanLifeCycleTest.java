@@ -88,6 +88,8 @@ public class BeanLifeCycleTest {
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://hello-spring.dev");
             return networkClient;
+            // return 후 @PostConstruct 실행
+            // @PostConstruct 는 의존성 주입 후 실행되는 초기화메서드
         }
     }
 }
