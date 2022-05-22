@@ -14,6 +14,10 @@ public class SingletonBeanFind {
     @Test
     public void singletonBeanFine(){
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(SingletonBean.class);
+        // ac를 통해 주입될 때 singleton이 만들어진다.
+        // 그렇기에 매번 ac.getBean 요청 시 주소가 같은 객체를 반환해준다.
+        System.out.println("2. init하고 getBean됨");
+
         SingletonBean singletonBean = ac.getBean(SingletonBean.class);
         SingletonBean singletonBean2 = ac.getBean(SingletonBean.class);
 
@@ -44,7 +48,9 @@ public class SingletonBeanFind {
     static class SingletonBean{
         @PostConstruct
         public void init(){
-            System.out.println("SingletonBean.init");
+            System.out.println("1. SingletonBean.init");
+            // 요청시마다 매번 같은 객체를 반환하니까
+            // 객체생성(init) -> getBean
         }
 
         @PreDestroy

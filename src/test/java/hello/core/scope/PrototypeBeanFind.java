@@ -7,22 +7,15 @@ import org.springframework.context.annotation.Scope;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class PrototypeBeanFind {
 
     @Test
     public void singletonBeanFine(){
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ProtoTypeBean.class);
+        System.out.println("1. getBean 하고");
         ProtoTypeBean protoTypeBean = ac.getBean(ProtoTypeBean.class);
         ProtoTypeBean protoTypeBean2 = ac.getBean(ProtoTypeBean.class);
 
-        System.out.println("find prototypeBean");
-        System.out.println("protoTypeBean = " + protoTypeBean);
-        System.out.println("find prototypeBean2");
-        System.out.println("protoTypeBean2 = " + protoTypeBean2);
-
-        assertThat(protoTypeBean).isNotSameAs(protoTypeBean2);
         ac.close();
 
         /**
@@ -48,7 +41,9 @@ public class PrototypeBeanFind {
     static class ProtoTypeBean{
         @PostConstruct
         public void init(){
-            System.out.println("ProtoTypeBean.init");
+            System.out.println("2. ProtoTypeBean.init이 호출됨");
+            // 요청(getBean)시마다 매번 다른 객체를 반환하니까
+            // getBean -> 객체생성(init)
         }
 
         @PreDestroy
